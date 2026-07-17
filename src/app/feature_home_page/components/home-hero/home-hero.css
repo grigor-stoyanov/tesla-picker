@@ -1,0 +1,18 @@
+.cta-button {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.cta-button:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}

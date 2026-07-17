@@ -1,0 +1,24 @@
+<form #f="ngForm">
+    <fieldset>
+        <label for="config">Config:</label>
+        <select [(ngModel)]="selectedConfigId" required (ngModelChange)="onSelectConfig($event)" name="config" id="config">
+            <option value="" disabled selected>Choose your configuration</option>
+            @for(c of carConfig()?.configs;track c;let i=$index;){
+            <option [value]="c.id">{{c.description}}</option>
+            }
+        </select>
+    </fieldset>
+    <ng-content></ng-content>
+    @if(carConfig()?.towHitch || carConfig()?.yoke){
+    <fieldset>
+        @if(carConfig()?.towHitch){
+        <label for="tow">Tow Hitch</label>
+        <input ngModel name="tow" id="tow" type="checkbox" />
+        }
+        @if(carConfig()?.yoke){
+        <label for="yoke">Yoke</label>
+        <input ngModel name="yoke" id="yoke" type="checkbox" />
+        }
+    </fieldset>
+    }
+</form>

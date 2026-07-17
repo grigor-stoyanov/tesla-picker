@@ -1,0 +1,11 @@
+<div *outside="'step2-header'" class="step-header">
+  <h2>Step 2: Choose your configuration</h2>
+  <button appNextButton [form]="form()" [navigateTo]="['/select', 'options']">Next &#8594;</button>
+</div>
+@if(selectedConfig()){
+<div class="config-stats">
+    <p>Range: {{selectedConfig()?.range}} mi</p>
+    <p>Top Speed: {{selectedConfig()?.speed}} mph</p>
+    <p>Price: ${{selectedConfig()?.price | number}}</p>
+</div>
+}

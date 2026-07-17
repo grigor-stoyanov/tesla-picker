@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  padding: 2rem;
+  max-width: 680px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
