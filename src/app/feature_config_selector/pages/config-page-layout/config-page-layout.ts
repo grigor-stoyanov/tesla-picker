@@ -9,6 +9,7 @@ import { ConfigView } from '../../components/config.view/config.view';
 import { OutsideDirective } from '../../../shared/directives/outside';
 import { CarImg } from "../../../ui/car-img/car-img";
 import { Steps } from "../../../ui/steps/steps";
+import { OptionService } from '../../services/option.service';
 
 @Component({
   selector: 'app-config-page-layout',
@@ -17,7 +18,7 @@ import { Steps } from "../../../ui/steps/steps";
   styleUrl: './config-page-layout.css',
 })
 export class ConfigPageLayout {
-  carService = inject(CarService);
+  configService = inject(OptionService);
   route = inject(ActivatedRoute);
   carOptions: Signal<CarOptions|undefined>;
   configFormRef = viewChild(ConfigForm);
@@ -25,11 +26,12 @@ export class ConfigPageLayout {
   constructor(){
   this.carOptions = toSignal(
     this.route.params.pipe(
-      switchMap(params => this.carService.getCarOptions(params['modelcode']))
+      switchMap(params => this.configService.getCarOptions(params['modelcode']))
     ));
     }
 
   onSelectedConfig(config:Config){
+    this.configService.selectedConfig=config
     this.currentConfig.set(config);
   }
   

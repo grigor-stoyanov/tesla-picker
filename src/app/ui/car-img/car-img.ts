@@ -12,5 +12,4 @@ export class CarImg {
   router = inject(Router);
   imageSrc = input<string>();
   resolveImg = computed(()=>this.imageSrc() || history.state?.['imgSrc']);
-  a = 5;
 }

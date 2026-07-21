@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, computed, inject, OnDestroy, output, signal, viewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { ModelService } from '../../services/model.service';
 import { CarService } from '../../../shared/services/car.service';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -14,11 +16,14 @@ import { CarService } from '../../../shared/services/car.service';
 export class Modelform implements AfterViewInit,OnDestroy {
   modelService = inject(ModelService);
   carService = inject(CarService);
+  route = inject(ActivatedRoute)
   models = this.modelService.models;
   selectedModel = signal('');
   colors = computed(() =>
     this.models()?.find(m => m.code === this.selectedModel())?.colors ?? []
   );
+  prefillModel = computed(() => this.route.snapshot.data['selectedResolver']?.model ?? null);
+  prefillColor = computed(() => this.route.snapshot.data['selectedResolver']?.color ?? null);
   form = viewChild<NgForm>('f');
   imageOutput = output<string>();
   formSubscriber:Subscription|undefined;
@@ -46,7 +51,7 @@ export class Modelform implements AfterViewInit,OnDestroy {
     if(!model || !color){
       return;
     }
-    const imageSrc = this.carService.getCarImage(model,color)
+    const imageSrc = this.carService.getCarImage(model,color.code)
     this.imageOutput.emit(imageSrc);
   }
 }

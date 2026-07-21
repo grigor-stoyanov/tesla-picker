@@ -28,7 +28,7 @@ export interface Config {
 export interface SelectedConfig {
   car: CarModel;
   color: Color;
-  config: Config;
+  config?: Config;
   yoke: boolean;
   towHitch: boolean;
 }

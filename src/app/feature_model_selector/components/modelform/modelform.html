@@ -1,17 +1,17 @@
 <form #f="ngForm" (ngSubmit)="onFormSubmit(f)">
 <label>Model:</label>
-<select #selectedModel ngModel name="model" ngModel required>
+<select #selectedModel [ngModel]="prefillModel()" name="model" ngModel required>
     <option value="" disabled selected>Choose an option</option>
     @for(m of models();track m.code){
         <option [value]="m.code">{{m.description}}</option>
     }
 </select>
-@if(selectedModel.value){
+@if(selectedModel.value || prefillColor()){
 <label>Color:</label>
-<select ngModel name="color" required>
+<select [ngModel]="prefillColor()" name="color" required>
     <option value="" disabled selected>Choose an option</option>
-    @for(c of colors();track c.code){
-        <option [value]="c.code">{{c.description}}</option>
+    @for(c of colors();track c){
+        <option [ngValue]="c">{{c.description}}</option>
     }
 </select>
 }
