@@ -1,7 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { Steps } from "../../../ui/steps/steps";
-import { ConfigView } from "../../../feature_config_selector/components/config.view/config.view";
 import { Modelview } from "../../components/modelview/modelview";
 import { CarImg } from "../../../ui/car-img/car-img";
 

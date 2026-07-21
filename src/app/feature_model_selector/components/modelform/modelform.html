@@ -3,7 +3,7 @@
 <select #selectedModel [ngModel]="prefillModel()" name="model" ngModel required>
     <option value="" disabled selected>Choose an option</option>
     @for(m of models();track m.code){
-        <option [value]="m.code">{{m.description}}</option>
+        <option [ngValue]="m">{{m.description}}</option>
     }
 </select>
 @if(selectedModel.value || prefillColor()){

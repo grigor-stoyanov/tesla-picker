@@ -1,5 +1,5 @@
 <div class="step-header">
   <h2>Step 1: Choose your model and color</h2>
-  <button appNextButton [form]="formRef()?.form()" [navigateTo]="['/select', 'options', this.selectedModel()]">Next &#8594;</button>
+  <button appNextButton [form]="formRef()?.form()" [navigateTo]="['/select', 'options', this.selectedModel()?.code!]">Next &#8594;</button>
 </div>
 <app-modelform (imageOutput)="onModelSelected($event)"/>

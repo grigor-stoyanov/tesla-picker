@@ -9,7 +9,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Service()
 export class ModelService {
     private http = inject(HttpClient);
-    public selectedModel = signal('');
+    public selectedModel = signal<CarModel|undefined>(undefined);
     public selectedColor = signal<Color | undefined>(undefined);
     
     readonly models = toSignal(this.getModels());

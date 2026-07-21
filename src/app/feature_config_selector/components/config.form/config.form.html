@@ -1,7 +1,8 @@
 <form #f="ngForm">
     <fieldset>
         <label for="config">Config:</label>
-        <select [ngModel]="prefilConfig()?.id ?? ''" required (ngModelChange)="onSelectConfig($event)" name="config" id="config">
+        <select [ngModel]="prefilConfig()?.id ?? ''" required (ngModelChange)="onSelectConfig($event)" name="config"
+            id="config">
             <option value="" disabled selected>Choose your configuration</option>
             @for(c of carConfig()?.configs;track c;let i=$index;){
             <option [value]="c.id">{{c.description}}</option>
@@ -13,11 +14,13 @@
     <fieldset>
         @if(carConfig()?.towHitch){
         <label for="tow">Tow Hitch</label>
-        <input ngModel name="tow" id="tow" type="checkbox" />
+        <input [ngModel]="prefilTow()??carConfig()?.towHitch" name="tow" id="tow" type="checkbox"
+            (ngModelChange)="onAccessoryChange()" [checked]="carConfig()?.towHitch" />
         }
         @if(carConfig()?.yoke){
         <label for="yoke">Yoke</label>
-        <input ngModel name="yoke" id="yoke" type="checkbox" />
+        <input [ngModel]="prefilYoke()??carConfig()?.yoke" name="yoke" id="yoke" type="checkbox"
+            (ngModelChange)="onAccessoryChange()" [checked]="carConfig()?.yoke" />
         }
     </fieldset>
     }

@@ -16,9 +16,16 @@ export class OptionService {
       )
     );
     selectedConfig= signal<Config|undefined>(undefined);
+    readonly towHitch = signal<boolean|undefined>(undefined);
+    readonly yoke = signal<boolean|undefined>(undefined);
 
 
   getCarOptions(model: string): Observable<CarOptions> {
-     return this.http.get<CarOptions>(`options/${model}`);
+     return this.http.get<CarOptions>(`options/${model}`).pipe(
+      tap(options => {
+        this.towHitch.set(options.towHitch),
+        this.yoke.set(options.yoke)
+      })
+     );
   }
 }

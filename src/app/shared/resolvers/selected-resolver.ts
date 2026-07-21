@@ -7,10 +7,11 @@ import { OptionService } from '../../feature_config_selector/services/option.ser
 export const selectedResolver: ResolveFn<Partial<SelectedConfig>> = (route, state) => {
   const modelService = inject(ModelService);
   const optionService = inject(OptionService)
-  const carId = route.paramMap.get('model')
   return {
     color:modelService.selectedColor(),
-    model:modelService.selectedModel()??carId,
-    config: optionService.selectedConfig()
+    car:modelService.selectedModel(),
+    config: optionService.selectedConfig(),
+  ...(optionService.towHitch() !== undefined && { towHitch: optionService.towHitch() }),
+  ...(optionService.yoke() !== undefined && { yoke: optionService.yoke() }),
   };
 };

@@ -32,9 +32,14 @@ export class ConfigPageLayout {
     ));
     }
 
-  onSelectedConfig(config:Config){
-    this.configService.selectedConfig.set(config);
-    this.currentConfig.set(config);
+  onSelectedConfig(config:{ config?: Config; yoke?: boolean; tow?: boolean }){
+    if ('config' in config) {
+      this.configService.selectedConfig.set(config.config);
+      this.currentConfig.set(config.config);
+    }
+
+    if ('tow' in config) this.configService.towHitch.set(config.tow);
+    if ('yoke' in config) this.configService.yoke.set(config.yoke);
   }
   
 }

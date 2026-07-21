@@ -1,0 +1,64 @@
+<div class="step-header">
+  <h2>Step 3: Review &amp; Confirm</h2>
+</div>
+<div class="summary-card">
+  <div class="summary-hero">
+    <span class="summary-model">Tesla {{car()?.description}}</span>
+    <button class="btn-next" (click)="confirmSelection()" appNextButton [navigateTo]="['/home']">Ready to Order</button>
+  </div>
+
+  <div class="summary-section">
+    <p class="section-label">Configuration</p>
+    <div class="summary-row">
+      <div class="summary-row-info">
+        <span class="row-meta"> {{config()?.range | metricPipe:'USA':'distance'}} range &nbsp;·&nbsp; {{config()?.speed
+          | metricPipe:'EU':'speed'}} top speed</span>
+      </div>
+      <span class="row-price">{{config()?.price | currency: 'USD'}}</span>
+    </div>
+  </div>
+
+  <div class="summary-section">
+    <p class="section-label">Paint</p>
+    <div class="summary-row">
+      <div class="summary-row-info">
+        <span class="row-meta">{{color()?.description}}</span>
+      </div>
+      <span class="row-price">
+        @if(color()?.price!==0 ){
+        {{color()?.price | currency: 'USD'}}
+        } @else {
+        Included
+        }
+      </span>
+    </div>
+  </div>
+  @if(towHitchPackage()){
+  <div class="summary-section">
+    <p class="section-label">Tow Hitch Package</p>
+    <div class="summary-row">
+      <div class="summary-row-info">
+        <span class="row-meta">
+          @if(resolverData.towHitch && resolverData.yoke){
+          Yoke &amp; Tow Hitch — Special Bundle
+          } @else if(resolverData.towHitch){
+          Tow Hitch included
+          } @else {
+          Yoke included
+          }
+        </span>
+      </div>
+      <span class="row-price">{{towHitchPackage() | currency: 'USD'}}</span>
+    </div>
+  </div>
+  }
+
+  <div class="summary-divider"></div>
+
+  <div class="summary-total">
+    <span>Estimated Total</span>
+    <span class="total-price">
+      {{totalPrice()| currency:'USD'}}
+    </span>
+  </div>
+</div>
