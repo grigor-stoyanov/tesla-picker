@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { modelSelectorRoutes } from './feature_model_selector/routes';
 import {configSelectorRoutes} from './feature_config_selector/routes';
+import { confirmRoutes } from './feature_confirm_page/routes';
 
 export const routes: Routes = [
     {
@@ -10,7 +11,7 @@ export const routes: Routes = [
     {
         path: 'select',
         loadComponent: () => import('./main').then(m=>m.Main),
-        children: [...modelSelectorRoutes,...configSelectorRoutes]
+        children: [...modelSelectorRoutes,...configSelectorRoutes,...confirmRoutes]
     },
     {
         path: '',

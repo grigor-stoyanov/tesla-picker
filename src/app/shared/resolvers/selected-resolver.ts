@@ -11,6 +11,6 @@ export const selectedResolver: ResolveFn<Partial<SelectedConfig>> = (route, stat
   return {
     color:modelService.selectedColor(),
     model:modelService.selectedModel()??carId,
-    config: optionService.selectedConfig
+    config: optionService.selectedConfig()
   };
 };

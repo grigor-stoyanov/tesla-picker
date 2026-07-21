@@ -1,6 +1,6 @@
 import { Component,input } from '@angular/core';
 import { NextButtonDirective } from '../../../ui/next-button/next-button.directive';
-import { Config } from '../../../interfaces';
+import { CarModel, Config } from '../../../interfaces';
 import { OutsideDirective } from '../../../shared/directives/outside';
 import { DecimalPipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
@@ -13,6 +13,7 @@ import { NgForm } from '@angular/forms';
 })
 export class ConfigView {
   form = input<NgForm>();
+  selectedModel = input.required<CarModel['code']>();
   selectedConfig = input<Config | undefined>();
 }
 

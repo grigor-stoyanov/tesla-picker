@@ -6,6 +6,7 @@ export const configSelectorRoutes : Routes = [
     {
         path:'options/:modelcode',
         canActivate: [stepGuardGuard],  
+        data:{step:2},
         resolve:{selectedResolver},
         loadComponent: () => {
             return import('./pages/config-page-layout/config-page-layout').then((m)=>m.ConfigPageLayout)

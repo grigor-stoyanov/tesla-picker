@@ -15,7 +15,7 @@ export class OptionService {
       map(options => options.configs)      
       )
     );
-    selectedConfig:Config|undefined = undefined;
+    selectedConfig= signal<Config|undefined>(undefined);
 
 
   getCarOptions(model: string): Observable<CarOptions> {

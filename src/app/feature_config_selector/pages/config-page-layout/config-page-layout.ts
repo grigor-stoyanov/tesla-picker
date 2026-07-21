@@ -2,8 +2,8 @@ import { AfterViewInit, Component, inject,signal,Signal, viewChild } from '@angu
 import { CarService } from '../../../shared/services/car.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs';
-import { CarOptions,Config } from '../../../interfaces';
+import { switchMap, tap } from 'rxjs';
+import { CarModel, CarOptions,Config } from '../../../interfaces';
 import { ConfigForm } from '../../components/config.form/config.form';
 import { ConfigView } from '../../components/config.view/config.view';
 import { OutsideDirective } from '../../../shared/directives/outside';
@@ -21,17 +21,19 @@ export class ConfigPageLayout {
   configService = inject(OptionService);
   route = inject(ActivatedRoute);
   carOptions: Signal<CarOptions|undefined>;
+  modelCode:CarModel['code']|undefined = undefined;
   configFormRef = viewChild(ConfigForm);
   currentConfig = signal<Config|undefined>(undefined);
   constructor(){
   this.carOptions = toSignal(
     this.route.params.pipe(
-      switchMap(params => this.configService.getCarOptions(params['modelcode']))
+      tap(params=>this.modelCode = params['modelcode'] as CarModel['code']),
+      switchMap((params) => this.configService.getCarOptions(params['modelcode']))
     ));
     }
 
   onSelectedConfig(config:Config){
-    this.configService.selectedConfig=config
+    this.configService.selectedConfig.set(config);
     this.currentConfig.set(config);
   }
   
