@@ -10,8 +10,4 @@ import { CarImg } from "../../../ui/car-img/car-img";
   styleUrl: './model-page-layout.css',
 })
 export class ModelPageLayout {
-  imgSrc = signal('');
-  onImageChange(image:string){
-    this.imgSrc.set(image);
-  }
 }

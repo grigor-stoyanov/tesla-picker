@@ -2,8 +2,8 @@ import { Component,inject, output, signal, viewChild } from '@angular/core';
 import { CarModel } from '../../../interfaces';
 import { Modelform } from '../modelform/modelform';
 import { NextButtonDirective } from '../../../ui/next-button/next-button.directive';
+import { carStore } from '../../../store/car.signal.store';
 
-import { ModelService } from '../../services/model.service';
 
 @Component({
   selector: 'app-modelview',
@@ -12,14 +12,7 @@ import { ModelService } from '../../services/model.service';
   styleUrl: './modelview.css',
 })
 export class Modelview {
-  private modelService = inject(ModelService);
-  imageSource = output<string>();
-  imgSrc=signal('');
-  selectedModel = this.modelService.selectedModel;
+  store = inject(carStore);
+  selectedModel = this.store.selectedCar.car;
   formRef = viewChild(Modelform);
-  readonly currentCar = signal<CarModel | undefined>(undefined);
-  onModelSelected(imgUrl:string){
-    this.imgSrc.set(imgUrl);
-    this.imageSource.emit(imgUrl)
-  }
 }

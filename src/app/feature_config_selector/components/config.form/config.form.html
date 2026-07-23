@@ -1,26 +1,26 @@
 <form #f="ngForm">
     <fieldset>
         <label for="config">Config:</label>
-        <select [ngModel]="prefilConfig()?.id ?? ''" required (ngModelChange)="onSelectConfig($event)" name="config"
+        <select [ngModel]="this.store.selectedCar?.config()?.id ?? ''" required (ngModelChange)="onSelectConfig($event)" name="config"
             id="config">
             <option value="" disabled selected>Choose your configuration</option>
-            @for(c of carConfig()?.configs;track c;let i=$index;){
+            @for(c of (options()?.configs);track c;let i=$index;){
             <option [value]="c.id">{{c.description}}</option>
             }
         </select>
     </fieldset>
     <ng-content></ng-content>
-    @if(carConfig()?.towHitch || carConfig()?.yoke){
+    @if(this.selectedCar()){
     <fieldset>
-        @if(carConfig()?.towHitch){
+        @if(this.options()?.towHitch){
         <label for="tow">Tow Hitch</label>
-        <input [ngModel]="prefilTow()??carConfig()?.towHitch" name="tow" id="tow" type="checkbox"
-            (ngModelChange)="onAccessoryChange()" [checked]="carConfig()?.towHitch" />
+        <input [ngModel]="this.selectedCar?.towHitch() || this.options()?.towHitch" name="tow" id="tow" type="checkbox"
+            (ngModelChange)="onAccessoryChange('towHitch',$event)" [checked]="this.selectedCar?.towHitch()" />
         }
-        @if(carConfig()?.yoke){
+        @if(this.options()?.yoke){
         <label for="yoke">Yoke</label>
-        <input [ngModel]="prefilYoke()??carConfig()?.yoke" name="yoke" id="yoke" type="checkbox"
-            (ngModelChange)="onAccessoryChange()" [checked]="carConfig()?.yoke" />
+        <input [ngModel]="this.selectedCar()?.yoke || this.options()?.yoke" name="yoke" id="yoke" type="checkbox"
+            (ngModelChange)="onAccessoryChange('yoke',$event)" [checked]="this.selectedCar?.yoke()" />
         }
     </fieldset>
     }

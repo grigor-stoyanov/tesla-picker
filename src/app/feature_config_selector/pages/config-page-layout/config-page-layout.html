@@ -1,6 +1,6 @@
 <app-steps/>
 <ng-container [outsideOutlet]="'step2-header'"/>
-<app-config [carOptions]="this.carOptions()" (selectedConfig)="onSelectedConfig($event)">
-    <app-config-view [selectedModel]="modelCode!" [form]="configFormRef()?.form()" [selectedConfig]="currentConfig()" />
+<app-config>
+    <app-config-view [form]="configFormRef()?.form()" />
 </app-config>
 <app-car-img/>

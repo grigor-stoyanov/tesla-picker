@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { CarService } from '../../shared/services/car.service';
-import { ModelService } from '../../feature_model_selector/services/model.service';
+import { carStore } from '../../store/car.signal.store';
 
 @Component({
   selector: 'app-steps',
@@ -10,7 +9,7 @@ import { ModelService } from '../../feature_model_selector/services/model.servic
   styleUrl: './steps.css',
 })
 export class Steps {
-  modelService = inject(ModelService)
-  selectedModel = this.modelService.selectedModel;
-  selectedColor = this.modelService.selectedColor;
+  store = inject(carStore)
+  selectedModel = this.store.selectedCar.car;
+  selectedColor = this.store.selectedCar.color;
 }

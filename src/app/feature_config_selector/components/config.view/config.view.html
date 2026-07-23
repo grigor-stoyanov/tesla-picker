@@ -1,8 +1,8 @@
 <div *outside="'step2-header'" class="step-header">
   <h2>Step 2: Choose your configuration</h2>
-  <button appNextButton [form]="form()" [navigateTo]="['/select', 'confirm',selectedModel()]">Next &#8594;</button>
+  <button appNextButton [form]="form()" [navigateTo]="['/select', 'confirm',model()?.code!]">Next &#8594;</button>
 </div>
-@if(selectedConfig()){
+@if(selectedConfig && selectedConfig()){
 <div class="config-stats">
     <p>Range: {{selectedConfig()?.range}} mi</p>
     <p>Top Speed: {{selectedConfig()?.speed}} mph</p>

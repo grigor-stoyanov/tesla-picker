@@ -1,17 +1,20 @@
-import { ResolveFn } from '@angular/router';
-import { SelectedConfig } from '../../interfaces';
 import { inject } from '@angular/core';
-import { ModelService } from '../../feature_model_selector/services/model.service';
-import { OptionService } from '../../feature_config_selector/services/option.service';
-
-export const selectedResolver: ResolveFn<Partial<SelectedConfig>> = (route, state) => {
-  const modelService = inject(ModelService);
-  const optionService = inject(OptionService)
-  return {
-    color:modelService.selectedColor(),
-    car:modelService.selectedModel(),
-    config: optionService.selectedConfig(),
-  ...(optionService.towHitch() !== undefined && { towHitch: optionService.towHitch() }),
-  ...(optionService.yoke() !== undefined && { yoke: optionService.yoke() }),
-  };
+import { ResolveFn } from '@angular/router';
+import { carStore } from '../../store/car.signal.store';
+import { getState } from '@ngrx/signals';
+export const selectedResolver: ResolveFn<{message:string} | null> = (route, state) => {
+  const store = inject(carStore);
+  switch(route.data['step']){
+    case 3:
+      return null;
+    case 2:
+      return {message: "Left Confirm Screen"}
+    case 1:
+      store.clearColor();
+      store.clearOption();
+      return {message:"Config Selection reset"}
+    default:
+      store.clearStore()
+      return {message: "Store is reset"}
+  }
 };

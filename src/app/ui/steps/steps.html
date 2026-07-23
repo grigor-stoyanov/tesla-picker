@@ -1,7 +1,7 @@
 '<nav class="nav nav-workflow">
   <ul role="none" class="list step-list">
     <li class="list-item step"><a [routerLink]="['/select','models']" routerLinkActive="active">Step 1</a></li>
-    <li class="list-item step"><a [routerLink]="['/select','options',selectedModel()?.code]" routerLinkActive="active">Step 2</a></li>
-    <li class="list-item step"><a routerLinkActive="active" [routerLink]="['/select','confirm',selectedModel()?.code]">Step 3</a></li>
+    <li class="list-item step"><a [routerLink]="['/select','options',selectedModel()?.code!]" routerLinkActive="active">Step 2</a></li>
+    <li class="list-item step"><a routerLinkActive="active" [routerLink]="['/select','confirm',selectedModel()?.code!]">Step 3</a></li>
   </ul>
 </nav>

@@ -10,6 +10,7 @@ import { OutsideDirective } from '../../../shared/directives/outside';
 import { CarImg } from "../../../ui/car-img/car-img";
 import { Steps } from "../../../ui/steps/steps";
 import { OptionService } from '../../services/option.service';
+import { carStore } from '../../../store/car.signal.store';
 
 @Component({
   selector: 'app-config-page-layout',
@@ -18,28 +19,11 @@ import { OptionService } from '../../services/option.service';
   styleUrl: './config-page-layout.css',
 })
 export class ConfigPageLayout {
-  configService = inject(OptionService);
+  store = inject(carStore);
   route = inject(ActivatedRoute);
-  carOptions: Signal<CarOptions|undefined>;
-  modelCode:CarModel['code']|undefined = undefined;
   configFormRef = viewChild(ConfigForm);
-  currentConfig = signal<Config|undefined>(undefined);
   constructor(){
-  this.carOptions = toSignal(
-    this.route.params.pipe(
-      tap(params=>this.modelCode = params['modelcode'] as CarModel['code']),
-      switchMap((params) => this.configService.getCarOptions(params['modelcode']))
-    ));
-    }
-
-  onSelectedConfig(config:{ config?: Config; yoke?: boolean; tow?: boolean }){
-    if ('config' in config) {
-      this.configService.selectedConfig.set(config.config);
-      this.currentConfig.set(config.config);
-    }
-
-    if ('tow' in config) this.configService.towHitch.set(config.tow);
-    if ('yoke' in config) this.configService.yoke.set(config.yoke);
+    this.store.loadOptions()
   }
   
 }

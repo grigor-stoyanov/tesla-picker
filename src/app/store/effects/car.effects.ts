@@ -6,12 +6,15 @@ import { isNonEmpty } from "../../shared/utils/helpers";
 
 
 export function withImageReolver(){
-    const carService = inject(CarService);
     const imgUrl = signal<string|null>(null);
     return signalStoreFeature(
         {
             state: type<CarState>()
         },
+        withProps(
+            ()=>({imgUrl,
+            carService:inject(CarService),})
+        ),
         withHooks({
             onInit(store){
                 effect(
@@ -19,14 +22,11 @@ export function withImageReolver(){
                         const model = store.selectedCar().car
                         const color = store.selectedCar().color
                         if(isNonEmpty(model?.code) && isNonEmpty(color?.code)){
-                            imgUrl.set(carService.getCarImage(model.code,color.code))
+                            imgUrl.set(store.carService.getCarImage(model.code,color.code))
                         }
                     }
                 )
             }
         }),
-        withProps(
-            ()=>imgUrl
-        )
     )
 }

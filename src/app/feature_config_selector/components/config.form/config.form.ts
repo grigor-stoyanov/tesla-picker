@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, computed, inject, input, OnDestroy, output, viewChild } from '@angular/core';
+import { Component, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import { CarOptions, Config } from '../../../interfaces';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { pipe, Subscription } from 'rxjs';
+
+import { carStore } from '../../../store/car.signal.store';
 @Component({
   selector: 'app-config',
   imports: [FormsModule],
@@ -11,25 +12,38 @@ import { pipe, Subscription } from 'rxjs';
 })
 export class ConfigForm {
   route = inject(ActivatedRoute);
-  carConfig = input.required<CarOptions | undefined>({ alias: 'carOptions' })
-  selectedConfigId: number | string = "";
-  selectedConfig = output< { config?: Config; yoke?: boolean; tow?: boolean }>();
-  form = viewChild<NgForm>('f');
-  formSubscription:Subscription|undefined = undefined;
-  prefilConfig = computed(()=>this.route.snapshot.data['selectedResolver']?.config ?? null);
-  prefilYoke = computed(()=>this.route.snapshot.data['selectedResolver']?.yoke ?? null);
-  prefilTow= computed(()=>this.route.snapshot.data['selectedResolver']?.tow ?? null);
+  store = inject(carStore);
+  form = viewChild<NgForm>('f')
+  selectedCar = this.store.selectedCar
+  model = this.selectedCar?.car;
+  code = computed(()=>{
+    return this.model()?.code
+  }
+  )
+  options = computed(()=>{
+    const code = this.code()
+    if(!code) return null;
+    return this.store.options()[code] ?? null;
+  })
 
-  onSelectConfig(id: number) {
-    const config = this.carConfig()?.configs.find(c => c.id === +id);
-    this.selectedConfig.emit({config});
+  constructor(){
+    this.store.selectAccessory(
+      'towHitch',
+      this.options()?.towHitch ?? false,
+    )
+    this.store.selectAccessory(
+      'yoke',
+      this.options()?.yoke ?? false
+    )
   }
 
-  onAccessoryChange(){
-    const {yoke, tow} = this.form()?.value ?? {};
-    this.selectedConfig.emit({
-      ...(typeof tow === 'boolean' && {tow}),
-      ...(typeof yoke === 'boolean' && {yoke})
-    })
+  onSelectConfig(id: number) {
+    const code = this.code();
+    if(!code) return;
+    this.store.selectOption(code,id);
+  }
+
+  onAccessoryChange(type:string,value:boolean){
+    this.store.selectAccessory(type,value);
   }
 }

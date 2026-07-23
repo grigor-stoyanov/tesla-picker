@@ -8,24 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 @Service()
 export class OptionService {
   private http = inject(HttpClient);
-  private route = inject(ActivatedRoute);
-  readonly config: Signal<Config[] | undefined> = 
-    toSignal(this.route.params.pipe(
-      switchMap(params => this.getCarOptions(params['modelCode'])),
-      map(options => options.configs)      
-      )
-    );
-    selectedConfig= signal<Config|undefined>(undefined);
-    readonly towHitch = signal<boolean|undefined>(undefined);
-    readonly yoke = signal<boolean|undefined>(undefined);
-
 
   getCarOptions(model: string): Observable<CarOptions> {
-     return this.http.get<CarOptions>(`options/${model}`).pipe(
-      tap(options => {
-        this.towHitch.set(options.towHitch),
-        this.yoke.set(options.yoke)
-      })
-     );
+     return this.http.get<CarOptions>(`options/${model}`);
   }
 }
